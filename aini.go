@@ -24,6 +24,7 @@ type Host struct {
 	User       string
 	Pass       string
 	PrivateKey string
+	Host       string
 }
 
 func NewFile(f string) (*Hosts, error) {
@@ -122,6 +123,9 @@ func parseParameters(params []string, host *Host) {
 			continue
 		} else if strings.Contains(p, "ansible_ssh_private_key_file") {
 			host.PrivateKey = strings.Split(p, "=")[1]
+			continue
+		} else if strings.Contains(p, "ansible_host") {
+			host.Host = strings.Split(p, "=")[1]
 			continue
 		} else {
 			fmt.Printf("unsupported ssh parameter: %v\n", p)
